@@ -30,10 +30,8 @@ public class Solution {
     if (dict == null || dict.get(0) == null) return -1;
     if (dict.get(0) == target) return 0;
     int index = 1;
-    while (dict.get(index) != null) {
-      if (dict.get(index) == target) return index;
-      else if (dict.get(index) > target) return binarySearch(dict, 0, index - 1, target);
-      else index = index * 2;
+    while (dict.get(index) != null && dict.get(index) < target) {
+      index = index * 2;
     }
     // xxxxxxxxxxxxxxxxxxxxx|xXxxxxxxxNN...NNNNNN|N
     // |2   4     8          2^i-1 ...          2 ^ i
