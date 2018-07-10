@@ -19,7 +19,7 @@ L = 2 -> 3 -> null, insert 1, return 1 -> 2 -> 3 -> null
  *   }
  * }
  */
- 
+
 public class Solution {
   public ListNode insert(ListNode head, int value) {
       // Write your solution here
@@ -40,5 +40,17 @@ public class Solution {
       newNode.next = cur.next;
       cur.next = newNode;
       return head;
+  }
+
+  public ListNode insert(ListNode head, int value) {
+    // 1 |2 3 4 5 6 6 7 8 9
+    // recursive way
+    ListNode newNode = new ListNode(value);
+    if (head == null || head.value >= value) {
+       newNode.next = head;
+       return newNode;
+    }
+    head.next = insert(head.next, value);
+    return head;
   }
 }
