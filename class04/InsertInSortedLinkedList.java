@@ -15,9 +15,8 @@ public class Solution {
       while (cur.next != null && cur.next.value < value) {
         cur = cur.next;
       }
-      ListNode next = cur.next;
+      newNode.next = cur.next;
       cur.next = newNode;
-      newNode.next = next;
       return head;
   }
 }
