@@ -78,7 +78,7 @@ class KSmallest {
   public int[] findKSmall(int[] array, k) {
     if (array == null) return array;  
     if (array.length == 0) return new int[k];
-    return quickSelect(array, 0, array.length, k);
+    return quickSelect(array, 0, array.length - 1, k);
   }
 
   public void quickSelect(int[] array, int i, int j, int k) {
