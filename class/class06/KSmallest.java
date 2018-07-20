@@ -81,21 +81,24 @@ class KSmallest {
     return quickSelect(array, 0, array.length, k);
   }
 
-  public int[] quickSelect(int[] array, int i, int j, int k) {
+  public void quickSelect(int[] array, int i, int j, int k) {
     int wall = partition(array, i, j);
-    if (wall == k) return Arrays.copyOf(array, k);
-    else if (wall < k) return quickSelect(array, i, wall - 1, k);
-    else return quickSelect(array, wall + 1, j, k);
+    if (wall == k) return;
+    else if (wall < k) quickSelect(array, i, wall - 1, k);
+    else quickSelect(array, wall + 1, j, k);
   }
 
   public int partition(int [] array, int i, int j) {
-    int pivot = array[k-1];
-    while (i < j) {
-      while(i < j && array[i] <= pivot) i++;
-      while(i < j && array[j] > pivot) j--;
-      if (i < j) swap(i, j);
-    } 
-    return i;
+    int pivot = array[j];
+    int start = i;
+    int end = j - 1;
+    while (start <= end) {
+      if (array[start] <= pivot) start++;
+      else if (array[end] > pivot) end--;
+      else swap(array, start++, end--);
+    }
+    swap(array, start, j);
+    return start;
   } 
 
   public void swap(int[] array, int i, int j) {
