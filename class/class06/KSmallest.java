@@ -109,4 +109,5 @@ class KSmallest {
     array[i] = array[j];
     array[j] = tmp;
   }
+
 }
