@@ -1,6 +1,72 @@
 class KSmallest {
+  
+    public int[] kSmallest(int[] array, int k) {
+    // Write your solution here
+    /*
+      1. MIN HEAP
 
-  /** 
+      2. MAX HEAP
+
+      3. Quick Select
+    */
+
+    return maxHeap(array, k);
+  }
+
+  public int[] minHeap(int[] array, int k) {
+    // 1. MIN HEAP.
+    int[] result = new int[k];
+    if (array == null || array.length == 0) return result;
+
+    Comparator<Integer> comparator = new MinHeapComparator();
+    // Comparator<Integer> comparatorLambda = (Integer x, Integer y) -> Integer.compare(x, y);
+    PriorityQueue<Integer> pq = new PriorityQueue<>(array.length, comparator);
+    // PriorityQueue<Integer> pq = new PriorityQueue<>(array.length, Comparator.comparingInt(x -> x));
+
+    for (int i : array) {
+      pq.add(i);
+    }
+    for (int i = 0; i < k; i++) {
+      result[i] = pq.remove();
+    }
+    return result;
+  }
+
+  public int[] maxHeap(int[] array, int k) {
+    // 2. MAX HEAP
+    int[] result = new int[k];
+    if (array == null || array.length == 0 || k == 0) return result;
+    PriorityQueue<Integer> pq = new PriorityQueue<>(k, new Comparator<Integer>(){
+      @Override
+      public int compare(Integer x, Integer y) {
+        return Integer.compare(y, x);
+      }
+    });
+    for (int i : array) {
+      if (pq.size() < k) {
+        pq.add(i);
+      } else if (i < pq.peek()) {
+        // pq.size == k
+        pq.remove();
+        pq.add(i);
+      }
+    }
+    for (int i = k-1; i >= 0; i--) {
+      result[i] = pq.remove();
+    }
+    return result;
+  }
+
+  public class MinHeapComparator implements Comparator<Integer> {
+    @Override
+    public int compare(Integer x, Integer y) {
+      return Integer.compare(x, y);
+    }
+  }
+
+  /*
+   * 3 **quick select**
+   *
    * select the most right element as pivot
    * the array size is array.length
    * 2 pointers, i and j; i starting from array index = 0
