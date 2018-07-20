@@ -75,20 +75,23 @@ class KSmallest {
    * i: 0 - i (including 0 but not including i) represents the number >=pivot
    * j: j - (size-2), (not including j) represents the number < pivot
    */
-  public int[] findKSmall(int[] array, k) {
+  public int[] findKSmall(int[] array, int k) {
     if (array == null) return array;  
-    if (array.length == 0) return new int[k];
-    return quickSelect(array, 0, array.length - 1, k);
+    if (array.length == 0 || k == 0) return new int[k];
+    quickSelect(array, 0, array.length - 1, k - 1); // Kth element -> array[k - 1]
+    int[] result = Arrays.copyOf(array, k); // newLength = k
+    Arrays.sort(result);
+    return result;
   }
 
   public void quickSelect(int[] array, int i, int j, int k) {
-    int wall = partition(array, i, j);
-    if (wall == k) return;
-    else if (wall < k) quickSelect(array, i, wall - 1, k);
-    else quickSelect(array, wall + 1, j, k);
+    int mid = partition(array, i, j);
+    if (mid == k) return;
+    else if (mid > k) quickSelect(array, i, mid - 1, k); // mid > k, k fall in [i, mid-1]
+    else quickSelect(array, mid + 1, j, k); // mid < k, k fall in [mid+1, j]
   }
 
-  public int partition(int [] array, int i, int j) {
+  public int partition(int[] array, int i, int j) {
     int pivot = array[j];
     int start = i;
     int end = j - 1;
